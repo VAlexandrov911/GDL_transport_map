@@ -1,4 +1,4 @@
-# gdl_metro_map
+# Guadalajara Transport Map
 Project to see all subway and macrobus lines together
 
 Current version
