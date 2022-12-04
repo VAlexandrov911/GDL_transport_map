@@ -1,7 +1,6 @@
 import pandas as pd
 import plotly.graph_objects as go
 
-
 gdl_metro_stations = pd.read_csv("gdl_metro.csv")
 
 # 1 line
@@ -105,17 +104,23 @@ fig.update_layout(margin={"r": 0,
                           "l": 0,
                           "b": 0}
                   )
+fig.update_layout(mapbox_bounds={"west": -103.8,
+                                 "east": -103,
+                                 "south": 20,
+                                 "north": 21}
+                  )
 fig.update_layout(
     hovermode='x unified',
     mapbox=dict(
-    accesstoken='pk.eyJ1IjoiZGFuaWNhbiIsImEiOiJjam4xZjBxZm0zd2FyM3ZwbnFqanJnZG9jIn0.AM7q7GapFhEt_b_JAJVqNA',
+        accesstoken='pk.eyJ1IjoiZGFuaWNhbiIsImEiOiJjam4xZjBxZm0zd2FyM3ZwbnFqanJnZG9jIn0.AM7q7GapFhEt_b_JAJVqNA',
         bearing=0,
         center=go.layout.mapbox.Center(
             lat=20.661035901320137,
             lon=-103.35748477714348
         ),
         pitch=0,
-        zoom=11.2
+        zoom=11.2,
+        style="outdoors"
     )
 )
 fig.show()
