@@ -1,6 +1,9 @@
 import pandas as pd
 import plotly.graph_objects as go
-
+import dash
+import dash_core_components as dcc
+import dash_html_components as html
+import dash_bootstrap_components as dbc
 
 gdl_metro_stations = pd.read_csv("gdl_metro.csv")
 
@@ -8,18 +11,19 @@ gdl_metro_stations = pd.read_csv("gdl_metro.csv")
 fig = go.Figure()
 fig.add_trace(go.Scattermapbox(
     name='Mi Tren L1',
-    lat=gdl_metro_stations["lat"][3:22],
-    lon=gdl_metro_stations["lon"][3:22],
+    lat=gdl_metro_stations["lat"][1:22],
+    lon=gdl_metro_stations["lon"][1:22],
     mode="markers+text+lines",
     marker=go.scattermapbox.Marker(
         size=14,
-        symbol=gdl_metro_stations["Type"][3:22]
+        symbol=gdl_metro_stations["Type"][1:22]
     ),
     line=go.scattermapbox.Line(
-        color='brown'
+        color='brown',
+        width=3
     ),
-    text=gdl_metro_stations["Station"][3:22],
-    textfont=dict(size=13, color='brown'),
+    text=gdl_metro_stations["Station"][1:22],
+    textfont=dict(size=15, color='brown'),
     textposition="bottom right",
     showlegend=True
 ))
@@ -35,10 +39,11 @@ fig.add_trace(go.Scattermapbox(
         symbol=gdl_metro_stations["Type"][22:33]
     ),
     line=go.scattermapbox.Line(
-        color='darkgreen'
+        color='darkgreen',
+        width=3
     ),
     text=gdl_metro_stations["Station"][22:33],
-    textfont=dict(size=13, color='darkgreen'),
+    textfont=dict(size=15, color='darkgreen'),
     textposition="bottom right",
     showlegend=True
 ))
@@ -54,10 +59,11 @@ fig.add_trace(go.Scattermapbox(
         symbol=gdl_metro_stations["Type"][33:52]
     ),
     line=go.scattermapbox.Line(
-        color='red'
+        color='red',
+        width=3
     ),
     text=gdl_metro_stations["Station"][33:52],
-    textfont=dict(size=13, color='red'),
+    textfont=dict(size=15, color='red'),
     textposition="bottom right",
     showlegend=True
 ))
@@ -73,10 +79,11 @@ fig.add_trace(go.Scattermapbox(
         symbol=gdl_metro_stations["Type"][52:80]
     ),
     line=go.scattermapbox.Line(
-        color='turquoise'
+        color='darkcyan',
+        width=2
     ),
     text=gdl_metro_stations["Station"][52:80],
-    textfont=dict(size=13, color='turquoise'),
+    textfont=dict(size=15, color='darkcyan'),
     textposition="bottom right",
     showlegend=True
 ))
@@ -89,33 +96,58 @@ fig.add_trace(go.Scattermapbox(
     mode="markers+text+lines",
     marker=go.scattermapbox.Marker(
         size=14,
-        symbol=gdl_metro_stations["Type"][80:123]
-    ),
-    line=go.scattermapbox.Line(
+        symbol=gdl_metro_stations["Type"][80:123],
         color='purple'
     ),
+    line=go.scattermapbox.Line(
+        color='purple',
+        width=2
+    ),
     text=gdl_metro_stations["Station"][80:123],
-    textfont=dict(size=13, color='purple'),
+    textfont=dict(size=15, color='purple'),
     textposition="bottom right",
     showlegend=True
 ))
 
-fig.update_layout(margin={"r": 0,
-                          "t": 0,
-                          "l": 0,
-                          "b": 0}
+fig.update_layout(margin={"r": 5,
+                          "t": 5,
+                          "l": 5,
+                          "b": 5}
+                  )
+fig.update_layout(mapbox_bounds={"west": -103.6,
+                                 "east": -103.1,
+                                 "south": 20.5,
+                                 "north": 21}
                   )
 fig.update_layout(
     hovermode='x unified',
     mapbox=dict(
-    accesstoken='pk.eyJ1IjoiZGFuaWNhbiIsImEiOiJjam4xZjBxZm0zd2FyM3ZwbnFqanJnZG9jIn0.AM7q7GapFhEt_b_JAJVqNA',
+        accesstoken='pk.eyJ1IjoiZGFuaWNhbiIsImEiOiJjam4xZjBxZm0zd2FyM3ZwbnFqanJnZG9jIn0.AM7q7GapFhEt_b_JAJVqNA',
         bearing=0,
         center=go.layout.mapbox.Center(
             lat=20.661035901320137,
             lon=-103.35748477714348
         ),
         pitch=0,
-        zoom=11.2
+        zoom=11.2,
+        style="outdoors"
     )
 )
-fig.show()
+# fig.show()
+
+app = dash.Dash(external_stylesheets=[dbc.themes.UNITED])
+
+title = dcc.Markdown(
+    """
+## Guadalajara Transport Map
+    My attempt to show main public lines and stations together @VAlex
+------------
+"""
+)
+
+app.layout = html.Div([
+    title,
+    dcc.Graph(figure=fig, style={"height": 615})
+])
+
+app.run_server(debug=True, use_reloader=False)
