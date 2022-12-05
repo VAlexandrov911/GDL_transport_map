@@ -7,4 +7,4 @@ Python with plotly and mapbox
 
 #### Current version
 
-![gdl_transport_current_VA](gdl_transport_current_VA.gif)
+![gdl_transport_current](gdl_transport_current.gif)
