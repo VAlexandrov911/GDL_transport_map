@@ -122,7 +122,7 @@ fig.update_layout(mapbox_bounds={"west": -103.6,
 fig.update_layout(
     hovermode='x unified',
     mapbox=dict(
-        accesstoken='pk.eyJ1IjoiZGFuaWNhbiIsImEiOiJjam4xZjBxZm0zd2FyM3ZwbnFqanJnZG9jIn0.AM7q7GapFhEt_b_JAJVqNA',
+        accesstoken='...',
         bearing=0,
         center=go.layout.mapbox.Center(
             lat=20.661035901320137,
